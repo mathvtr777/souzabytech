@@ -134,29 +134,6 @@ if (easter && toast) {
   document.querySelectorAll('.section-divider').forEach(d => obs.observe(d));
 })();
 
-/* ── TIMELINE REVEAL (sem GSAP) ── */
-(function initTimeline() {
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        const items = e.target.querySelectorAll('.ftl-item');
-        items.forEach((item, i) => setTimeout(() => item.classList.add('visible'), i * 180));
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: .2 });
-  const tl = document.querySelector('.founder-timeline');
-  if (tl) obs.observe(tl);
-})();
-
-/* ── FOUNDER PHOTO REVEAL (sem GSAP) ── */
-(function initFounderPhoto() {
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); obs.unobserve(e.target); } });
-  }, { threshold: .15 });
-  const wrap = document.querySelector('.founder-photo-wrap');
-  if (wrap) obs.observe(wrap);
-})();
 
 /* ── LIVE COUNTER NO HERO ── */
 (function initLiveCount() {
@@ -371,18 +348,20 @@ function initAnimations() {
     });
   }
 
-  /* ── FOUNDER section ── */
-  gsap.from('.founder-name', {
-    x: -60, opacity: 0, duration: 1, ease: 'expo.out',
-    scrollTrigger: { trigger: '.founder-name', start: 'top 85%' },
-  });
-  gsap.from('.founder-role, .founder-bio', {
-    y: 24, opacity: 0, stagger: .12, duration: .8, ease: 'expo.out',
-    scrollTrigger: { trigger: '.founder-bio', start: 'top 88%' },
-  });
-  gsap.from('.founder-skills span', {
+  /* ── ABOUT skills ── */
+  gsap.from('.about-skills span', {
     scale: .85, opacity: 0, stagger: .04, duration: .5, ease: 'back.out(1.5)',
-    scrollTrigger: { trigger: '.founder-skills', start: 'top 88%' },
+    scrollTrigger: { trigger: '.about-skills', start: 'top 88%' },
+  });
+
+  /* ── ABOUT timeline ── */
+  gsap.from('.about-tl-title', {
+    x: -40, opacity: 0, duration: .9, ease: 'expo.out',
+    scrollTrigger: { trigger: '.about-timeline-wrap', start: 'top 85%' },
+  });
+  gsap.from('.about-tl-item', {
+    y: 30, opacity: 0, stagger: .12, duration: .7, ease: 'expo.out',
+    scrollTrigger: { trigger: '.about-tl-items', start: 'top 88%' },
   });
 
   /* ── HERO FLOAT CARDS ── */
