@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <defs>
+    <!-- Gradiente céu barroco -->
+    <radialGradient id="sky" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#D4A855" stop-opacity="0.9"/>
+      <stop offset="25%" stop-color="#C4922A" stop-opacity="0.7"/>
+      <stop offset="55%" stop-color="#8B5E3C" stop-opacity="0.6"/>
+      <stop offset="80%" stop-color="#4A2C1A" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#1A0A00"/>
+    </radialGradient>
+    <!-- Luz dramática -->
+    <radialGradient id="light1" cx="35%" cy="25%" r="40%">
+      <stop offset="0%" stop-color="#F5DFA0" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#C4922A" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="light2" cx="70%" cy="40%" r="30%">
+      <stop offset="0%" stop-color="#E8C870" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#8B4513" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Nuvens barrocas -->
+    <filter id="blur-soft">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+    <filter id="blur-cloud">
+      <feGaussianBlur stdDeviation="20"/>
+    </filter>
+    <!-- Ruído textura tela -->
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" result="noise"/>
+      <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/>
+      <feBlend in="SourceGraphic" in2="grayNoise" mode="overlay" result="blended"/>
+      <feComposite in="blended" in2="SourceGraphic" operator="in"/>
+    </filter>
+  </defs>
+
+  <!-- Fundo escuro base -->
+  <rect width="1920" height="1080" fill="#0D0500"/>
+
+  <!-- Céu gradiente barroco -->
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+
+  <!-- Nuvens volumosas (barrocas) -->
+  <ellipse cx="480" cy="200" rx="380" ry="160" fill="#D4B878" opacity="0.35" filter="url(#blur-cloud)"/>
+  <ellipse cx="700" cy="150" rx="300" ry="120" fill="#F0D090" opacity="0.25" filter="url(#blur-cloud)"/>
+  <ellipse cx="300" cy="280" rx="280" ry="100" fill="#C8A050" opacity="0.2" filter="url(#blur-cloud)"/>
+  <ellipse cx="1400" cy="180" rx="350" ry="140" fill="#D4B060" opacity="0.3" filter="url(#blur-cloud)"/>
+  <ellipse cx="1600" cy="120" rx="250" ry="110" fill="#E8C870" opacity="0.2" filter="url(#blur-cloud)"/>
+  <ellipse cx="1100" cy="100" rx="420" ry="150" fill="#C8A040" opacity="0.25" filter="url(#blur-cloud)"/>
+
+  <!-- Luz divina central -->
+  <ellipse cx="680" cy="240" rx="500" ry="350" fill="url(#light1)" opacity="0.8"/>
+  <ellipse cx="1350" cy="380" rx="400" ry="300" fill="url(#light2)" opacity="0.6"/>
+
+  <!-- Raios de luz barrocos -->
+  <line x1="680" y1="0" x2="200" y2="1080" stroke="#F5DFA0" stroke-width="2" opacity="0.06"/>
+  <line x1="700" y1="0" x2="900" y2="1080" stroke="#F5DFA0" stroke-width="3" opacity="0.05"/>
+  <line x1="600" y1="0" x2="100" y2="1080" stroke="#E8C870" stroke-width="1.5" opacity="0.04"/>
+  <line x1="750" y1="0" x2="1100" y2="1080" stroke="#F0D090" stroke-width="2" opacity="0.04"/>
+
+  <!-- Silhuetas de figuras mitológicas (formas abstratas barrocas) -->
+  <!-- Anjo esquerdo -->
+  <g opacity="0.55" filter="url(#blur-soft)">
+    <ellipse cx="350" cy="350" rx="45" ry="60" fill="#D4A855"/>
+    <path d="M350 280 Q330 240 300 230 Q320 260 340 290" fill="#C8A050" opacity="0.9"/>
+    <path d="M350 280 Q370 230 410 220 Q390 255 360 285" fill="#D4B060" opacity="0.9"/>
+    <path d="M305 340 Q270 320 250 350 Q260 380 300 370" fill="#B89040" opacity="0.7"/>
+    <path d="M395 340 Q430 315 455 345 Q445 375 405 368" fill="#C8A050" opacity="0.7"/>
+    <ellipse cx="350" cy="295" rx="28" ry="30" fill="#E8C870" opacity="0.8"/>
+    <!-- Asas -->
+    <path d="M350 290 Q280 220 220 250 Q260 300 320 310" fill="#F0D898" opacity="0.4"/>
+    <path d="M350 290 Q420 215 480 240 Q445 295 385 308" fill="#F0D898" opacity="0.4"/>
+  </g>
+
+  <!-- Figura central flutuante -->
+  <g opacity="0.45" transform="translate(800, 150)">
+    <ellipse cx="0" cy="200" rx="60" ry="80" fill="#C4922A" opacity="0.6"/>
+    <ellipse cx="0" cy="130" rx="35" ry="38" fill="#D4A855" opacity="0.7"/>
+    <path d="M-60 200 Q-100 170 -120 200 Q-100 240 -65 230" fill="#B88030" opacity="0.5"/>
+    <path d="M60 200 Q100 165 125 195 Q108 238 68 228" fill="#C8A050" opacity="0.5"/>
+  </g>
+
+  <!-- Figura direita em queda dramática -->
+  <g opacity="0.4" transform="translate(1450, 300) rotate(-20)">
+    <ellipse cx="0" cy="180" rx="50" ry="70" fill="#8B4513" opacity="0.7"/>
+    <ellipse cx="0" cy="110" rx="30" ry="32" fill="#C4922A" opacity="0.6"/>
+    <path d="M-50 180 Q-90 150 -110 175 Q-90 215 -55 205" fill="#7A3510" opacity="0.6"/>
+    <path d="M50 175 Q85 148 108 172 Q90 210 56 200" fill="#8B4513" opacity="0.6"/>
+  </g>
+
+  <!-- Querubins pequenos -->
+  <g opacity="0.5" transform="translate(580, 180)">
+    <ellipse cx="0" cy="0" rx="20" ry="22" fill="#F0D090" opacity="0.8"/>
+    <path d="M0 -15 Q-25 -35 -45 -20 Q-30 0 -5 -5" fill="#F5DFA0" opacity="0.5"/>
+    <path d="M0 -15 Q25 -38 45 -22 Q32 2 8 -4" fill="#F5DFA0" opacity="0.5"/>
+  </g>
+  <g opacity="0.4" transform="translate(900, 140)">
+    <ellipse cx="0" cy="0" rx="18" ry="20" fill="#E8C870" opacity="0.7"/>
+    <path d="M0 -12 Q-22 -30 -38 -18 Q-26 2 -4 -3" fill="#F0D090" opacity="0.45"/>
+    <path d="M0 -12 Q22 -32 40 -19 Q28 4 6 -2" fill="#F0D090" opacity="0.45"/>
+  </g>
+
+  <!-- Escuridão base (parte inferior) -->
+  <rect x="0" y="600" width="1920" height="480" fill="url(#sky)" opacity="0.3"/>
+  <linearGradient id="bottomDark" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#0D0500" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#0D0500" stop-opacity="0.7"/>
+  </linearGradient>
+  <rect x="0" y="500" width="1920" height="580" fill="url(#bottomDark)"/>
+
+  <!-- Textura de tela de pintura (sutil) -->
+  <rect width="1920" height="1080" fill="transparent" filter="url(#noise)" opacity="0.08"/>
+
+  <!-- Vignette -->
+  <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+    <stop offset="0%" stop-color="#0D0500" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#0D0500" stop-opacity="0.6"/>
+  </radialGradient>
+  <rect width="1920" height="1080" fill="url(#vignette)"/>
+</svg>
