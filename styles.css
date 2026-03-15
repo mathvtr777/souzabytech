@@ -116,15 +116,17 @@ img { display: block; max-width: 100%; }
 }
 
 #loader-logo-name {
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: clamp(3.5rem, 10vw, 10rem);
   line-height: 1;
-  letter-spacing: -.02em;
-  color: var(--fg);
   opacity: 0;
   transform: translateY(30px);
   animation: lt-fade-up .9s cubic-bezier(.76,0,.24,1) .5s forwards;
+}
+
+.loader-logo-img {
+  height: clamp(60px, 12vw, 130px);
+  width: auto;
+  display: block;
+  filter: brightness(0) invert(1);
 }
 
 #loader-logo-name em {
@@ -253,12 +255,19 @@ img { display: block; max-width: 100%; }
 .nav-left { display: flex; align-items: baseline; gap: 14px; }
 
 .nav-brand {
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: 1.15rem;
-  letter-spacing: .02em;
-  color: var(--fg);
+  display: flex;
+  align-items: center;
 }
+
+.nav-logo-img {
+  height: 32px;
+  width: auto;
+  display: block;
+  filter: brightness(0) invert(1);
+  transition: filter .2s;
+}
+
+#nav.solid .nav-logo-img { filter: brightness(0) invert(1); }
 
 .nav-label {
   font-size: .65rem;
@@ -333,12 +342,15 @@ img { display: block; max-width: 100%; }
   width: 34px; height: 34px;
   border: 1px solid var(--gold);
   display: flex; align-items: center; justify-content: center;
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: .9rem;
-  color: var(--gold);
-  letter-spacing: .06em;
   flex-shrink: 0;
+  padding: 4px;
+}
+
+.badge-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(60%) sepia(60%) saturate(600%) hue-rotate(5deg);
 }
 
 .badge-info {
