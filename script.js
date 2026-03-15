@@ -180,7 +180,9 @@ document.querySelectorAll('.work-item').forEach((item, i) => {
   item.addEventListener('mouseenter', () => {
     previewInner.style.background = previewColors[i];
     previewInner.innerHTML = `<span style="font-family:var(--serif);font-size:1.1rem;font-weight:700;color:rgba(240,232,216,.35);letter-spacing:.06em;display:flex;align-items:center;justify-content:center;height:100%">${previewNames[i]}</span>`;
-    previewInner.style.transform = `rotate(${(Math.random()-.5)*8}deg)`;
+    const rot = (Math.random() - .5) * 8;
+    previewInner._rot = rot;
+    previewInner.style.transform = `rotate(${rot}deg)`;
     preview.classList.add('show');
   });
   item.addEventListener('mouseleave', () => {
@@ -188,7 +190,19 @@ document.querySelectorAll('.work-item').forEach((item, i) => {
   });
 });
 
-document.addEventListener('mousemove', e => { ptx = e.clientX; pty = e.clientY; });
+document.addEventListener('mousemove', e => {
+  ptx = e.clientX;
+  pty = e.clientY;
+
+  /* tilt 3D no preview */
+  if (preview && preview.classList.contains('show')) {
+    const rx =  (e.clientY / window.innerHeight - .5) * 20;
+    const ry = -(e.clientX / window.innerWidth  - .5) * 20;
+    const rot = previewInner._rot || 0;
+    previewInner.style.transform = `rotate(${rot}deg) perspective(400px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+  }
+});
+
 (function loopPreview() {
   px += (ptx - px) * .1;
   py += (pty - py) * .1;
@@ -248,14 +262,21 @@ function initAnimations() {
     });
   });
 
-  /* works list — stagger */
-  gsap.from('.work-item', {
-    opacity: 0,
-    x: -30,
-    stagger: .055,
-    duration: .65,
-    ease: 'expo.out',
-    scrollTrigger: { trigger: '.works-list', start: 'top 82%' },
+  /* works list — entrada + linha se desenhando */
+  gsap.utils.toArray('.work-item').forEach((item, i) => {
+    gsap.from(item, {
+      opacity: 0,
+      x: -40,
+      duration: .7,
+      ease: 'expo.out',
+      delay: i * .08,
+      scrollTrigger: { trigger: '.works-list', start: 'top 80%', once: true },
+    });
+    gsap.fromTo(item,
+      { borderBottomColor: 'rgba(240,232,216,0)' },
+      { borderBottomColor: 'rgba(240,232,216,.1)', duration: .8, delay: i * .08,
+        scrollTrigger: { trigger: '.works-list', start: 'top 80%', once: true } }
+    );
   });
 
   /* numbers table rows */
@@ -393,15 +414,40 @@ function initAnimations() {
     }
   });
 
-  /* ── TILT 3D NOS WORK ITEMS ── */
-  document.querySelectorAll('.work-item').forEach(item => {
+  /* ── TILT 3D + COR DE FUNDO nos work-items ── */
+  const worksSection = document.getElementById('works');
+  const defaultBg = 'rgba(12,12,12,.86)';
+  const itemColors = [
+    'rgba(30,15,5,.92)',
+    'rgba(5,20,10,.92)',
+    'rgba(5,10,25,.92)',
+    'rgba(20,10,5,.92)',
+    'rgba(25,8,0,.92)',
+    'rgba(5,15,20,.92)',
+  ];
+
+  document.querySelectorAll('.work-item').forEach((item, i) => {
+    item.style.transition = 'transform .4s cubic-bezier(.76,0,.24,1), padding-left .3s cubic-bezier(.76,0,.24,1)';
+
     item.addEventListener('mousemove', e => {
       const r = item.getBoundingClientRect();
-      const y =  ((e.clientX - r.left)  / r.width  - .5) * 6;
-      const x = -((e.clientY - r.top)   / r.height - .5) * 3;
-      item.style.transform = `perspective(600px) rotateX(${x}deg) rotateY(${y}deg)`;
+      const y =  ((e.clientX - r.left) / r.width  - .5) * 4;
+      const x = -((e.clientY - r.top)  / r.height - .5) * 2;
+      item.style.transform = `perspective(800px) rotateX(${x}deg) rotateY(${y}deg) translateZ(4px)`;
     });
-    item.addEventListener('mouseleave', () => { item.style.transform = ''; });
+
+    item.addEventListener('mouseleave', () => {
+      item.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateZ(0)';
+    });
+
+    item.addEventListener('mouseenter', () => {
+      if (worksSection) gsap.to(worksSection, { backgroundColor: itemColors[i], duration: .5, ease: 'power2.out' });
+    });
+
+    item.addEventListener('mouseleave', () => {
+      if (worksSection) gsap.to(worksSection, { backgroundColor: defaultBg, duration: .5, ease: 'power2.out' });
+      item.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateZ(0)';
+    });
   });
 
   /* magnetic buttons */

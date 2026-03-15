@@ -1164,6 +1164,95 @@ img { display: block; max-width: 100%; }
   50%      { box-shadow: 0 0 0 12px rgba(196,146,42,0); }
 }
 
+/* ── WORKS MELHORIAS ── */
+
+/* header com contador */
+.works-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 60px;
+}
+
+.works-count {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  padding-bottom: 8px;
+}
+
+.wc-num {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(3rem, 6vw, 7rem);
+  line-height: 1;
+  color: rgba(240,232,216,.15);
+}
+
+.wc-label {
+  font-size: .6rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(240,232,216,.25);
+}
+
+/* número gigante no fundo */
+.work-item { position: relative; overflow: hidden; }
+
+.work-item::after {
+  content: attr(data-project);
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(80px, 15vw, 180px);
+  color: rgba(240,232,216,.04);
+  line-height: 1;
+  pointer-events: none;
+  transition: color .4s ease, transform .4s ease;
+  z-index: 0;
+}
+
+.work-item:hover::after {
+  color: rgba(196,146,42,.12);
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* nome + descrição oculta */
+.work-name-wrap {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* altura = font-size do .work-name × line-height */
+  height: clamp(1.54rem, 3.52vw, 3.3rem);
+}
+
+.work-name {
+  display: block;
+  transition: transform .4s cubic-bezier(.76,0,.24,1);
+}
+
+.work-item:hover .work-name { transform: translateY(-100%); }
+
+.work-desc {
+  position: absolute;
+  bottom: -100%;
+  left: 0;
+  font-size: clamp(.62rem, 1vw, .78rem);
+  font-weight: 300;
+  letter-spacing: .08em;
+  color: var(--gold);
+  transition: bottom .4s cubic-bezier(.76,0,.24,1);
+  white-space: nowrap;
+  line-height: 1.1;
+}
+
+.work-item:hover .work-desc { bottom: 0; }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   .about-inner { grid-template-columns: 1fr; }
