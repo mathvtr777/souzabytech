@@ -364,11 +364,6 @@ function initAnimations() {
     scrollTrigger: { trigger: '.about-tl-items', start: 'top 88%' },
   });
 
-  /* ── HERO FLOAT CARDS ── */
-  gsap.from('.hfc', {
-    opacity: 0, y: 20, stagger: .15, duration: .8, ease: 'expo.out', delay: 1.2,
-  });
-
   /* ── HERO LIVE COUNT ── */
   gsap.from('.hero-live-count', {
     opacity: 0, y: 12, duration: .7, ease: 'expo.out', delay: 1.1,
