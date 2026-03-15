@@ -80,10 +80,15 @@ if (brand) {
   });
 }
 
-/* ── NAV SCROLL ── */
+/* ── NAV SCROLL + SCROLL PROGRESS ── */
 const nav = document.getElementById('nav');
+const scrollBar = document.getElementById('scroll-progress');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('solid', window.scrollY > 60);
+  if (scrollBar) {
+    const p = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+    scrollBar.style.width = p + '%';
+  }
 }, { passive: true });
 
 /* ── BADGE FLOAT ── */
@@ -120,6 +125,63 @@ if (easter && toast) {
     }, 700);
   });
 }
+
+/* ── SECTION DIVIDERS (sem GSAP) ── */
+(function initDividers() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: .3 });
+  document.querySelectorAll('.section-divider').forEach(d => obs.observe(d));
+})();
+
+/* ── TIMELINE REVEAL (sem GSAP) ── */
+(function initTimeline() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const items = e.target.querySelectorAll('.ftl-item');
+        items.forEach((item, i) => setTimeout(() => item.classList.add('visible'), i * 180));
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: .2 });
+  const tl = document.querySelector('.founder-timeline');
+  if (tl) obs.observe(tl);
+})();
+
+/* ── FOUNDER PHOTO REVEAL (sem GSAP) ── */
+(function initFounderPhoto() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); obs.unobserve(e.target); } });
+  }, { threshold: .15 });
+  const wrap = document.querySelector('.founder-photo-wrap');
+  if (wrap) obs.observe(wrap);
+})();
+
+/* ── LIVE COUNTER NO HERO ── */
+(function initLiveCount() {
+  const el = document.getElementById('live-count');
+  if (!el) return;
+  let n = 50;
+  setInterval(() => {
+    n++;
+    el.classList.add('flip');
+    setTimeout(() => {
+      el.textContent = n;
+      el.style.transform = 'translateY(100%)';
+      el.style.opacity = '0';
+      requestAnimationFrame(() => {
+        el.style.transition = 'none';
+        requestAnimationFrame(() => {
+          el.style.transition = '';
+          el.classList.remove('flip');
+          el.style.transform = '';
+          el.style.opacity = '';
+        });
+      });
+    }, 250);
+  }, 8000);
+})();
 
 /* ── WORK PREVIEW (cursor-follow image) ── */
 const preview      = document.getElementById('work-preview');
@@ -308,6 +370,65 @@ function initAnimations() {
       },
     });
   }
+
+  /* ── FOUNDER section ── */
+  gsap.from('.founder-name', {
+    x: -60, opacity: 0, duration: 1, ease: 'expo.out',
+    scrollTrigger: { trigger: '.founder-name', start: 'top 85%' },
+  });
+  gsap.from('.founder-role, .founder-bio', {
+    y: 24, opacity: 0, stagger: .12, duration: .8, ease: 'expo.out',
+    scrollTrigger: { trigger: '.founder-bio', start: 'top 88%' },
+  });
+  gsap.from('.founder-skills span', {
+    scale: .85, opacity: 0, stagger: .04, duration: .5, ease: 'back.out(1.5)',
+    scrollTrigger: { trigger: '.founder-skills', start: 'top 88%' },
+  });
+
+  /* ── HERO FLOAT CARDS ── */
+  gsap.from('.hfc', {
+    opacity: 0, y: 20, stagger: .15, duration: .8, ease: 'expo.out', delay: 1.2,
+  });
+
+  /* ── HERO LIVE COUNT ── */
+  gsap.from('.hero-live-count', {
+    opacity: 0, y: 12, duration: .7, ease: 'expo.out', delay: 1.1,
+  });
+
+  /* ── CLIP-PATH REVEAL nas seções ── */
+  gsap.utils.toArray('.about-inner, .founder-inner, .works-inner, .numbers-inner, .services-inner').forEach(el => {
+    gsap.from(el, {
+      clipPath: 'inset(0 0 8% 0)',
+      opacity: 0,
+      duration: 1,
+      ease: 'expo.out',
+      scrollTrigger: { trigger: el, start: 'top 85%' },
+    });
+  });
+
+  /* ── SPLIT TITLES — linha 1 da esquerda, linha 2 da direita ── */
+  document.querySelectorAll('.works-title, .numbers-title, .services-title').forEach(title => {
+    const lines = title.querySelectorAll('*');
+    if (lines.length >= 1) {
+      gsap.from(lines[0], { x: -60, opacity: 0, duration: 1, ease: 'expo.out',
+        scrollTrigger: { trigger: title, start: 'top 85%' } });
+    }
+    if (lines.length >= 2) {
+      gsap.from(lines[1], { x: 60, opacity: 0, duration: 1, ease: 'expo.out',
+        scrollTrigger: { trigger: title, start: 'top 85%' } });
+    }
+  });
+
+  /* ── TILT 3D NOS WORK ITEMS ── */
+  document.querySelectorAll('.work-item').forEach(item => {
+    item.addEventListener('mousemove', e => {
+      const r = item.getBoundingClientRect();
+      const y =  ((e.clientX - r.left)  / r.width  - .5) * 6;
+      const x = -((e.clientY - r.top)   / r.height - .5) * 3;
+      item.style.transform = `perspective(600px) rotateX(${x}deg) rotateY(${y}deg)`;
+    });
+    item.addEventListener('mouseleave', () => { item.style.transform = ''; });
+  });
 
   /* magnetic buttons */
   document.querySelectorAll('.btn-pill').forEach(btn => {
