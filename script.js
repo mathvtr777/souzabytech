@@ -160,58 +160,6 @@ if (easter && toast) {
   }, 8000);
 })();
 
-/* ── WORK PREVIEW (cursor-follow image) ── */
-const preview      = document.getElementById('work-preview');
-const previewInner = document.getElementById('work-preview-inner');
-
-const previewColors = [
-  'linear-gradient(135deg,#1a0800,#3d1f00)',
-  'linear-gradient(135deg,#001a08,#003d1f)',
-  'linear-gradient(135deg,#0a001a,#1f003d)',
-  'linear-gradient(135deg,#1a1200,#3d2e00)',
-  'linear-gradient(135deg,#1a0600,#3d1500)',
-  'linear-gradient(135deg,#001416,#002d30)',
-];
-const previewNames = ['Barber King','FitZone','Clínica Sorrir','Advocacia Mendes','RestaurantePrime','LogiTrack'];
-
-let px = 0, py = 0, ptx = 0, pty = 0;
-
-document.querySelectorAll('.work-item').forEach((item, i) => {
-  item.addEventListener('mouseenter', () => {
-    previewInner.style.background = previewColors[i];
-    previewInner.innerHTML = `<span style="font-family:var(--serif);font-size:1.1rem;font-weight:700;color:rgba(240,232,216,.35);letter-spacing:.06em;display:flex;align-items:center;justify-content:center;height:100%">${previewNames[i]}</span>`;
-    const rot = (Math.random() - .5) * 8;
-    previewInner._rot = rot;
-    previewInner.style.transform = `rotate(${rot}deg)`;
-    preview.classList.add('show');
-  });
-  item.addEventListener('mouseleave', () => {
-    preview.classList.remove('show');
-  });
-});
-
-document.addEventListener('mousemove', e => {
-  ptx = e.clientX;
-  pty = e.clientY;
-
-  /* tilt 3D no preview */
-  if (preview && preview.classList.contains('show')) {
-    const rx =  (e.clientY / window.innerHeight - .5) * 20;
-    const ry = -(e.clientX / window.innerWidth  - .5) * 20;
-    const rot = previewInner._rot || 0;
-    previewInner.style.transform = `rotate(${rot}deg) perspective(400px) rotateX(${rx}deg) rotateY(${ry}deg)`;
-  }
-});
-
-(function loopPreview() {
-  px += (ptx - px) * .1;
-  py += (pty - py) * .1;
-  if (preview) {
-    preview.style.left = px + 'px';
-    preview.style.top  = py + 'px';
-  }
-  requestAnimationFrame(loopPreview);
-})();
 
 /* ── GSAP ANIMATIONS (só roda após loader) ── */
 function initAnimations() {

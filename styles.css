@@ -760,25 +760,6 @@ img { display: block; max-width: 100%; }
   transform: translate(3px,-3px);
 }
 
-/* floating preview */
-#work-preview {
-  position: fixed;
-  pointer-events: none;
-  z-index: 200;
-  transform: translate(-50%,-50%);
-  opacity: 0;
-  transition: opacity .25s;
-}
-
-#work-preview.show { opacity: 1; }
-
-#work-preview-inner {
-  width: 280px;
-  height: 190px;
-  transform: rotate(-2deg);
-  overflow: hidden;
-  transition: transform .4s cubic-bezier(.76,0,.24,1);
-}
 
 /* ── NUMBERS ── */
 #numbers {
