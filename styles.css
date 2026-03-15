@@ -520,15 +520,21 @@ img { display: block; max-width: 100%; }
 .photo-box {
   width: 100%;
   aspect-ratio: 3/4;
+  overflow: hidden;
   background: linear-gradient(160deg,#1a0800,#0c0c0c);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: 4rem;
-  color: rgba(240,232,216,.15);
-  letter-spacing: .1em;
+}
+
+.photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: grayscale(15%) contrast(1.05);
+  transition: transform .6s cubic-bezier(.76,0,.24,1);
+}
+
+.photo-box:hover img {
+  transform: scale(1.04);
 }
 
 .photo-tag {
